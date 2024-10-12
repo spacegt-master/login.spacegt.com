@@ -1,0 +1,37 @@
+{
+  "name": "login.spacegt.com",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@vueuse/core": "^11.1.0",
+    "animate.css": "^4.1.1",
+    "axios": "^1.7.7",
+    "crypto-js": "^4.2.0",
+    "element-plus": "^2.8.4",
+    "file-saver": "^2.0.5",
+    "glightbox": "^3.3.0",
+    "pinia": "^2.2.4",
+    "pinia-plugin-persistedstate": "^4.1.1",
+    "plyr": "^3.7.8",
+    "universal-cookie": "^7.2.1",
+    "uuid": "^10.0.0",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/compiler-sfc": "^3.5.12",
+    "sass": "^1.79.4",
+    "sass-loader": "^16.0.2",
+    "vite": "^5.4.8"
+  }
+}

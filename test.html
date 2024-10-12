@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script crossorigin src="https://unpkg.com/universal-cookie@7/umd/universalCookie.min.js"></script>
+		<style>
+			body {
+				background-color: #eee;
+			}
+
+			iframe {
+				width: 600px;
+				height: 500px;
+				border: 0;
+				border-radius: 16px;
+				filter: drop-shadow(2px 4px 6px #888);
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+	</head>
+	<body>
+		<iframe src="http://192.168.124.10:3009/login"></iframe>
+		<script>
+			window.addEventListener("message", receiveMessage, false);
+
+			function receiveMessage(event) {
+				var origin = event.origin;
+				if (origin == "http://192.168.124.10:3009") {
+					if (event.data == 'login-success') {
+						console.log('登录成功')
+						const cookies = new UniversalCookie()
+						console.log(cookies.get('USER_CERTIFICATE'))
+					} else
+					if (event.data == 'login-failure') {
+						console.log('登录失败')
+					}
+				}
+			}
+			const params = new URLSearchParams(window.location.search)
+			console.log(params.has('origin'))
+			console.log(params.get("origin"))
+		</script>
+	</body>
+</html>
