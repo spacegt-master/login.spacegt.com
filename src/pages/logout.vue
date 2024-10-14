@@ -16,7 +16,8 @@
 
 	onMounted(() => {
 		const cookies = new Cookies(null, {
-			path: '/'
+			path: '/',
+			domain: route.query.domain ? route.query.domain : window.location.hostname
 		})
 		cookies.remove('USER_CERTIFICATE')
 		const parent = window.opener || window.parent

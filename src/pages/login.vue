@@ -24,7 +24,10 @@
 
 	const route = useRoute()
 	const corner = ref('login')
-	const cookies = new Cookies()
+	const cookies = new Cookies({
+		path: '/',
+		domain: route.query.domain ? route.query.domain : window.location.hostname
+	})
 	const origin = ref()
 
 	const handleSuccess = () => {

@@ -30,14 +30,19 @@
 	import {
 		ref
 	} from 'vue'
+	import {
+		useRoute
+	} from 'vue-router'
 
+	const route = useRoute()
 	const emit = defineEmits(['success'])
 	const tab = ref('sms')
 
 	const handleSuccess = (data) => {
 		if (data.id) {
 			const cookies = new Cookies(null, {
-				path: '/'
+				path: '/',
+				domain: route.query.domain ? route.query.domain : window.location.hostname
 			})
 			// 为用户创建30天有效证书
 			const USER_CERTIFICATE = user_certificate.create(data.id, new Date().getTime() + 1000 * 60 * 60 * 24 * 30)
