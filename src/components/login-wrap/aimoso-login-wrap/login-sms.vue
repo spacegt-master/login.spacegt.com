@@ -46,14 +46,16 @@ import {
 	login,
 	profile
 } from '../../../api/aimoso.js'
+import { useRoute } from 'vue-router'
 
 const emit = defineEmits(['success'])
 const aimosoStore = useAimosoStore()
+const route = useRoute()
 const checkbox = ref(false)
 const time = ref(0)
 const phone = ref('')
 const code = ref('')
-const org = ref('6538f3932a3c305c9d11bfe1')
+const org = ref(route.query['aimoso-org'])
 const loading = ref(false)
 
 const submit = async () => {
