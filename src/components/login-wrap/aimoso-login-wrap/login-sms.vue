@@ -67,7 +67,7 @@ const submit = async () => {
 		// const info = await profile({ org: org.value, token: res.data.token })
 		// console.log(info)
 		emit('success', {
-			id: res.data.token,
+			id: JSON.stringify({ token: res.data.token, org: org.value }),
 			mode: 'aimoso'
 		})
 	} catch (e) {
