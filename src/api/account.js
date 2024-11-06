@@ -1,7 +1,4 @@
 import axios from '../axios/index.js'
-import AES from 'crypto-js/aes'
-import MD5 from 'crypto-js/md5'
-import CryptoJS from 'crypto-js'
 
 export function loginPhone(phone, code) {
 	return axios({

@@ -1,10 +1,10 @@
 <template>
 	<div class="passport">
 		<div class="login-type-tab">
-			<div class="tab-btn active">易格账号</div>
-			<div class="tab-btn" style="cursor: not-allowed;">云账号</div>
+			<div class="tab-btn" :class="{'active':loginType=='yigee'}" @click="loginType='yigee'">易格账号</div>
+			<div class="tab-btn" :class="{'active':loginType=='aimoso'}" @click="loginType='aimoso'">墨子账号</div>
 		</div>
-		<div class="pass-login">
+		<div class="pass-login yigee" v-show="loginType=='yigee'">
 			<div class="componseLeft">
 				<p class="login-type-tab">
 					<span class="switch-item" :class="{'active':tab=='sms'}" @click="tab='sms'">短信登录</span>
@@ -18,6 +18,11 @@
 				<login-qrcode-vue></login-qrcode-vue>
 			</div>
 		</div>
+		<div class="pass-login aimoso" v-show="loginType=='aimoso'">
+			<div class="componseLeft">
+				<aimoso-login-sms-vue v-if="tab=='sms'" @success="handleSuccess"></aimoso-login-sms-vue>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -27,6 +32,7 @@
 	import loginSmsVue from './login-sms.vue';
 	import loginQrcodeVue from './login-qrcode.vue';
 	import loginNormalVue from './login-normal.vue';
+	import aimosoLoginSmsVue from './aimoso-login-wrap/login-sms.vue'
 	import {
 		ref
 	} from 'vue'
@@ -36,6 +42,7 @@
 
 	const route = useRoute()
 	const emit = defineEmits(['success'])
+	const loginType = ref('yigee') // yigee aimoso
 	const tab = ref('sms')
 
 	const handleSuccess = (data) => {
@@ -154,6 +161,10 @@
 			&:focus {
 				border: 1px solid #2468f2;
 			}
+		}
+
+		&.aimoso:deep(.pass-text-input){
+			width: 350px;
 		}
 
 		&:deep(.pass-sms-agreement) {

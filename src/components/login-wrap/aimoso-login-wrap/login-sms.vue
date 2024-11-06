@@ -1,6 +1,11 @@
 <template>
 	<div class="pass-login-sms">
 		<p class="pass-form-item">
+			<el-select v-model="org" placeholder="选择组织" size="large" filterable>
+				<el-option v-for="item in orgs" :key="item.oid" :label="item.name" :value="item.oid" />
+			</el-select>
+		</p>
+		<p class="pass-form-item">
 			<input v-model="phone" type="text" class="pass-text-input" maxlength="11" placeholder="手机号">
 		</p>
 		<p class="pass-form-item">
@@ -25,31 +30,43 @@
 </template>
 
 <script setup>
+import orgs from './orgs.json'
 import {
 	ElNotification
 } from 'element-plus'
 import {
-	ref
+	ref,
+	onMounted
 } from 'vue'
 import {
-	sendCode as messageSendCode
-} from '../../api/message.js'
+	useAimosoStore
+} from '../../../store/aimoso.js'
 import {
-	loginPhone
-} from '../../api/account.js'
+	smsCodes,
+	login,
+	profile
+} from '../../../api/aimoso.js'
 
 const emit = defineEmits(['success'])
+const aimosoStore = useAimosoStore()
 const checkbox = ref(false)
 const time = ref(0)
 const phone = ref('')
 const code = ref('')
+const org = ref('6538f3932a3c305c9d11bfe1')
 const loading = ref(false)
 
 const submit = async () => {
 	loading.value = true
 	try {
-		const res = await loginPhone(phone.value, code.value)
-		emit('success', res)
+		const res = await login({
+			phoneNumber: phone.value, smsCode: code.value, type: 'SMS', org: org.value
+		})
+		// const info = await profile({ org: org.value, token: res.data.token })
+		// console.log(info)
+		emit('success', {
+			id: res.data.token
+		})
 	} catch (e) {
 		ElNotification({
 			title: '登录失败',
@@ -65,21 +82,34 @@ const sendCode = async () => {
 		time.value--;
 		if (time.value == 0) clearInterval(intervalId)
 	}, 1000)
-	const res = await messageSendCode(phone.value)
-	if (res) {
+	await aimosoStore.getNVCValAsync()
+	const res = await smsCodes({
+		phone: phone.value,
+		org: org.value,
+		headerOptions: aimosoStore.nvcData
+	})
+	if (res.errorCode) {
+		ElNotification({
+			title: '信息',
+			message: res.errorMessage,
+			type: 'warning',
+		})
+	} else {
 		ElNotification({
 			title: '信息',
 			message: '短信发送成功。',
 			type: 'success',
 		})
-	} else {
-		ElNotification({
-			title: '信息',
-			message: '短信发送失败。',
-			type: 'warning',
-		})
 	}
 }
+window.initializeJsonp_00298260140217681 = function (data) {
+	console.log(data)
+}
+onMounted(() => {
+	setTimeout(() => {
+		aimosoStore.initNvc()
+	}, 200)
+})
 </script>
 
 <style scoped lang="scss">
