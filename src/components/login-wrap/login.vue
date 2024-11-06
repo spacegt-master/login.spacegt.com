@@ -1,8 +1,10 @@
 <template>
 	<div class="passport">
 		<div class="login-type-tab">
-			<div class="tab-btn" :class="{ 'active': loginType == 'yigee' }" @click="loginType = 'yigee'; tab = 'sms';">易格账号</div>
-			<div class="tab-btn" :class="{ 'active': loginType == 'aimoso' }" @click="loginType = 'aimoso'; tab = 'sms';">墨子账号
+			<div class="tab-btn" :class="{ 'active': loginType == 'yigee' }" @click="loginType = 'yigee'; tab = 'sms';">
+				易格账号</div>
+			<div class="tab-btn" :class="{ 'active': loginType == 'aimoso' }"
+				@click="loginType = 'aimoso'; tab = 'sms';">墨子账号
 			</div>
 		</div>
 		<div class="pass-login yigee" v-if="loginType == 'yigee'">
@@ -56,6 +58,7 @@ const handleSuccess = (data) => {
 		// 为用户创建30天有效证书
 		const USER_CERTIFICATE = user_certificate.create(data.id, new Date().getTime() + 1000 * 60 * 60 * 24 * 30)
 		cookies.set('USER_CERTIFICATE', USER_CERTIFICATE)
+		cookies.set('LOGIN_MODE', data.mode)
 		emit('success')
 	}
 }

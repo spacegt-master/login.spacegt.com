@@ -13,47 +13,50 @@
 		</span>
 		<p class="pass-form-item pass-form-item-submit">
 			<input type="submit" value="登录" class="pass-button pass-button-submit"
-				:disabled="!checkbox||account==''||password==''"
-				:class="{'disabled':!checkbox||account==''||password==''}" @click="submit">
+				:disabled="!checkbox || account == '' || password == ''"
+				:class="{ 'disabled': !checkbox || account == '' || password == '' }" @click="submit">
 		</p>
 	</div>
 </template>
 
 <script setup>
-	import {
-		ElNotification
-	} from 'element-plus'
-	import {
-		ref
-	} from 'vue'
-	import {
-		loginAccount
-	} from '../../api/account.js'
+import {
+	ElNotification
+} from 'element-plus'
+import {
+	ref
+} from 'vue'
+import {
+	loginAccount
+} from '../../api/account.js'
 
-	const emit = defineEmits(['success'])
-	const checkbox = ref(false)
-	const account = ref('')
-	const password = ref('')
-	const loading = ref(false)
+const emit = defineEmits(['success'])
+const checkbox = ref(false)
+const account = ref('')
+const password = ref('')
+const loading = ref(false)
 
-	const submit = async () => {
-		loading.value = true
-		try {
-			const res = await loginAccount(account.value, password.value)
-			emit('success', res)
-		} catch (e) {
-			ElNotification({
-				title: '登录失败',
-				message: '请检查输入是否正确。',
-				type: 'warning',
-			})
-		}
-		loading.value = false
+const submit = async () => {
+	loading.value = true
+	try {
+		const res = await loginAccount(account.value, password.value)
+		emit('success', {
+			id: res.id,
+			mode: 'yigee'
+		})
+	} catch (e) {
+		ElNotification({
+			title: '登录失败',
+			message: '请检查输入是否正确。',
+			type: 'warning',
+		})
 	}
+	loading.value = false
+}
 </script>
 
 <style scoped lang="scss">
-	.pass-login-normal {
-		padding-top: 20px;
-	}
+.pass-login-normal {
+	padding-top: 20px;
+}
 </style>

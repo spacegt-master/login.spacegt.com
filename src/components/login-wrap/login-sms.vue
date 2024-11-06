@@ -49,7 +49,10 @@ const submit = async () => {
 	loading.value = true
 	try {
 		const res = await loginPhone(phone.value, code.value)
-		emit('success', res)
+		emit('success', {
+			id: res.id,
+			mode: 'yigee'
+		})
 	} catch (e) {
 		ElNotification({
 			title: '登录失败',
