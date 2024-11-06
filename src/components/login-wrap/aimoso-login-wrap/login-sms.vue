@@ -116,7 +116,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .pass-login-sms {
-	padding-top: 20px;
 
 	.pass-form-item {
 		position: relative;
