@@ -55,7 +55,7 @@ const checkbox = ref(false)
 const time = ref(0)
 const phone = ref('')
 const code = ref('')
-const org = ref(route.query['aimoso-org'])
+const org = ref()
 const loading = ref(false)
 
 const submit = async () => {
@@ -109,6 +109,9 @@ window.initializeJsonp_00298260140217681 = function (data) {
 	console.log(data)
 }
 onMounted(() => {
+	if (route.query['aimoso-org']) {
+		org.value = route.query['aimoso-org']
+	}
 	setTimeout(() => {
 		aimosoStore.initNvc()
 	}, 200)
